@@ -1,0 +1,34 @@
+{
+  "name": "TenVideoPlayer_V2",
+  "version": "2.0.0",
+  "description": "Tencent Video Player",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Tencent",
+    "Video",
+    "Player",
+    "TenPlayer"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.1.1",
+    "grunt-contrib-uglify": "~0.2.5",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-text-replace": "*",
+    "grunt-wrap": "~0.3.0"
+  },
+  "author": {
+    "team": "Tencent-Video Web Front End Team",
+    "members": "popotang komahu grubbyliu jarvanxing walkerwang derekma xingkaiwang ameliexu kbinliu"
+  },
+  "cfg": {
+    "temp": "./.temp/",
+    "releasePath": "../../release/tencentvideo_v1/tvp/js/",
+    "debugPath": "../../release/tencentvideo_v1/tvp/_debug_/"
+  }
+}
