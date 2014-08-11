@@ -1,17 +1,17 @@
 /**
- * @fileOverview 腾讯视频云播放器 tvp.VideoInfo 视频对象
+ * @fileOverview 腾讯视频云播放器 xplayer.VideoInfo 视频对象
  */
 
 /*
  * 这个类是定义视频信息的数据对象，该数据对象包含了点播和直播的数据接口
  */
 /*
- * @include "./tvp.define.js"
+ * @include "./xplayer.define.js"
  */
 
 
 ;
-(function(tvp, $) {
+(function(xplayer, $) {
 
 	var defaultPrivData = {
 		poster: "", //默认封面图
@@ -41,9 +41,9 @@
 	/**
 	 * 视频对象
 	 *
-	 * @class tvp.VideoInfo
+	 * @class xplayer.VideoInfo
 	 */
-	tvp.VideoInfo = function() {
+	xplayer.VideoInfo = function() {
 		var _vid = "",
 			_vidlist = "",
 			_vidCnt = 0,
@@ -113,11 +113,11 @@
 		 * 绑定统一播放器的自定义事件
 		 */
 		function bindPlayerEvent(){
-			if(curPlayer && curPlayer instanceof tvp.Player){
+			if(curPlayer && curPlayer instanceof xplayer.Player){
 				//在h5播放器开始初始化前的事件，先发起异步请求获取mp4地址
-				curPlayer.on(tvp.ACTION.onVodH5Init,function(){
+				curPlayer.on(xplayer.ACTION.onVodH5Init,function(){
 					var defer;
-					if((curPlayer.config.isHtml5UseHLS === "auto" && tvp.common.isUseHLS()) || curPlayer.config.isHtml5UseHLS){
+					if((curPlayer.config.isHtml5UseHLS === "auto" && xplayer.common.isUseHLS()) || curPlayer.config.isHtml5UseHLS){
 						return ;
 					}
 					defer = $me.getMP4Url();
@@ -147,10 +147,10 @@
 		/**
 		 * 设置视频Vid
 		 *
-		 * @public tvp.VideoInfo
+		 * @public xplayer.VideoInfo
 		 */
 		this.setVid = function(vid) {
-			if (!tvp.$.isString(vid)) {
+			if (!xplayer.$.isString(vid)) {
 				return;
 			}
 			this.clear();
@@ -254,7 +254,7 @@
 		 * 设置直播频道id
 		 */
 		this.setChannelId = function(cnlid) {
-			if (!tvp.$.isString(cnlid)) {
+			if (!xplayer.$.isString(cnlid)) {
 				return;
 			}
 			// this.clear();
@@ -320,7 +320,7 @@
 		 */
 		this.getVideoSnap = function() {
 			var img = [];
-			img[0] = tvp.common.getVideoSnap(_vid, _idx);
+			img[0] = xplayer.common.getVideoSnap(_vid, _idx);
 			img[1] = img[0].replace("_160_90_3", "_1");
 			img[2] = img[1].replace("_1.jpg", ".png");
 			return img;
@@ -357,12 +357,12 @@
 			}
 			loadServerDefer[defKey] = $.Deferred();
 			var t = this;
-			tvp.h5Helper.loadVideoUrlByVid({
+			xplayer.h5Helper.loadVideoUrlByVid({
 				vid: vid,
 				isPay: this.getPay(),
 				fmt: this.getFormat(),
-				appId : curPlayer instanceof tvp.Player ? curPlayer.config.appid : 0,
-				contentId : curPlayer instanceof tvp.Player ? curPlayer.config.contentId : ""
+				appId : curPlayer instanceof xplayer.Player ? curPlayer.config.appid : 0,
+				contentId : curPlayer instanceof xplayer.Player ? curPlayer.config.contentId : ""
 			}).done(function(videourl, sd) {
 				t.url = videourl;
 				t.data = sd;
@@ -402,12 +402,12 @@
 			}
 			loadServerDefer[defKey] = $.Deferred();
 			var t = this;
-			tvp.h5Helper.loadHLSUrlByVid({
+			xplayer.h5Helper.loadHLSUrlByVid({
 				vid: vid,
 				isPay: this.getPay(),
 				fmt: this.getFormat(),
-				appId : curPlayer instanceof tvp.Player ? curPlayer.config.appid : 0,
-				contentId : curPlayer instanceof tvp.Player ? curPlayer.config.contentId : ""
+				appId : curPlayer instanceof xplayer.Player ? curPlayer.config.appid : 0,
+				contentId : curPlayer instanceof xplayer.Player ? curPlayer.config.contentId : ""
 			}).done(function(videourl, sd) {
 				t.url = videourl;
 				t.data = sd;
@@ -441,7 +441,7 @@
 		this.getSrtLangList = function() {
 			if ($.type(this.data.sfl) == "object" && $.isArray(this.data.sfl.fi)) {
 				$.each(this.data.sfl.fi, function(i, obj) {
-					obj.desc = tvp.html5lang.getSrtName(obj.id);
+					obj.desc = xplayer.html5lang.getSrtName(obj.id);
 				});
 				return this.data.sfl.fi;
 			}
@@ -485,7 +485,7 @@
 			loadServerDefer[defKey] = $.Deferred();
 
 			var t = this;
-			tvp.h5Helper.loadSRT({
+			xplayer.h5Helper.loadSRT({
 				"vid": vid,
 				"sflid": sflobj.id,
 				"pid": t.getPid()
@@ -564,29 +564,4 @@
 			return ($.type(this.data.sfl) == "object" && $.isArray(this.data.sfl.fi) && this.data.sfl.fi.length > 0);
 		}
 	};
-
-
-	/**
-	 * 定义视频播放类型——直播或者点播
-	 *
-	 * @namespace tvp.PLAYTYPE
-	 * @type {Object}
-	 */
-	tvp.PLAYTYPE = {
-		/**
-		 * 直播
-		 *
-		 * @default 1
-		 * @type String
-		 */
-		LIVE: "1",
-		/**
-		 * 点播
-		 *
-		 * @default 2
-		 * @type String
-		 */
-		VOD: "2"
-	}
-
-})(tvp, tvp.$);
+})(xplayer, xplayer.$);

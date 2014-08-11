@@ -1,18 +1,8 @@
-/**
- * @fileOverview 腾讯视频云播放器 定义xplayer下的通用函数接口
- */
-
-/*
- * @include "./xplayer.define.js"
- * @include "./xplayer.$.js"
- */
-
-xplayer = xplayer || {};
 
 /**
  * 封装通用函数
  *
- * @namespace xplayer.common
+ * @namespace xplayer.utils
  * @type {Object}
  */
 xplayer.utils = {

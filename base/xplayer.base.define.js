@@ -84,3 +84,25 @@ xplayer.PLATFORM = {
 };
 
 xplayer.PLAYERNAMES = ["FlashPlayer", "FlashLivePlayer", "MP4Link", "Html5Player", "Html5LivePlayer"];
+/**
+ * 定义视频播放类型——直播或者点播
+ *
+ * @namespace tvp.PLAYTYPE
+ * @type {Object}
+ */
+tvp.PLAYTYPE = {
+	/**
+	 * 直播
+	 *
+	 * @default 1
+	 * @type String
+	 */
+	LIVE: "1",
+	/**
+	 * 点播
+	 *
+	 * @default 2
+	 * @type String
+	 */
+	VOD: "2"
+}

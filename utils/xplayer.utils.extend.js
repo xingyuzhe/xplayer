@@ -21,6 +21,17 @@
 		isString: function(val) {
 			return $.type(val) === "string";
 		},
+		exists:function(item){
+			switch (typeof (item)) {
+			case STRING:
+				return (item.length > 0);
+			case OBJECT:
+				return (item !== null);
+			case UNDEFINED:
+				return FALSE;
+			}
+			return TRUE;			
+		},
 		/**
 		 * 是否未定义
 		 *

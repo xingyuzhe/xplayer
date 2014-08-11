@@ -65,29 +65,21 @@
 			"hidePlayer",
 			"play",
 			"pause",
-			"getPlaytime",
-			"setPlaytime",
+			"getCurrentTime",
 			"getPlayerType",
+			"seek",
+			"seekTo",
 			"resize"
 		];
 
 		this.prototype = {};
 
 		(function(me) { // 对外提供的公开方法
-			var arr = ["init", "addParam", "write", "setPlayerReady"];
-			arr = arr.concat(me.hijackFun);
+			var arr = this.hijackFun;
 			for (var i = 0, len = arr.length; i < len; i++) {
 				me.prototype[arr[i]] = xplayer.$.noop; // 设置为空函数
 			}
 		})(this);
-		/**
-		 * 向播放器传递config配置参数
-		 *
-		 * @public
-		 */
-		this.addParam = function(k, v) {
-			this.config[k] = v;
-		}
 		
 		/**
 		 * 挂载自定义事件回调到统一播放器实例上
@@ -143,12 +135,6 @@
 		 * 设置当前播放视频对象
 		 */
 		setCurVideo: function(videoinfo) {
-			// if (this.curVideo === null) {
-			// 	this.curVideo = new xplayer.VideoInfo();
-			// }
-			// if (videoinfo instanceof xplayer.VideoInfo) {
-			// 	videoinfo.clone(this.curVideo);
-			// }
 			this.curVideo = videoinfo;
 		},
 		getPlayer: function() {
@@ -187,9 +173,6 @@
 		init: function(config) {
 
 			$.extend(this.config, config);
-
-			// this.config.modWidth = this.config.modWidth || this.config.width;
-			// this.config.modHeight = this.config.modHeight || this.config.height;
 
 			for (var i = 0, len = this.eventList.length; i < len; i++) {
 				var evtName = "on" + this.eventList[i];

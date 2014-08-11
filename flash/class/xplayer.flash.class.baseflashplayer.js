@@ -1,13 +1,13 @@
 ;
-(function(tvp, $) {
+(function(xplayer, $) {
 
 	/**
 	 * Flash播放器基类
 	 *
-	 * @class tvp.BaseFlash
-	 * @extends tvp.BasePlayer
+	 * @class xplayer.BaseFlash
+	 * @extends xplayer.BasePlayer
 	 */
-	tvp.BaseFlash = function() {
+	xplayer.BaseFlash = function() {
 		var $me = this;
 
 		this.swfPathRoot = "";
@@ -21,12 +21,12 @@
 		this.flashVarsKeyMapToCfg = {};
 	}
 
-	if (typeof tvp.BaseFlash.maxId != "number") {
-		tvp.BaseFlash.maxId = 0;
+	if (typeof xplayer.BaseFlash.maxId != "number") {
+		xplayer.BaseFlash.maxId = 0;
 	}
-	tvp.BaseFlash.prototype = new tvp.BasePlayer();
+	xplayer.BaseFlash.prototype = new xplayer.BasePlayer();
 
-	$.extend(tvp.BaseFlash.prototype, {
+	$.extend(xplayer.BaseFlash.prototype, {
 		getFlashVar: function() {
 			return "";
 		},
@@ -55,7 +55,7 @@
 		getFlashSwfUrl: function() {
 			var swfurl = "";
 			//直播
-			if (this.config.type == tvp.PLAYER_DEFINE.LIVE) {
+			if (this.config.type == xplayer.PLAYER_DEFINE.LIVE) {
 				// TODO:这里需要加入验证传入的swf是否是qq.com，paipai.com,soso.com,gtimg.cn
 				if ($.isString(this.config.liveFlashUrl) && this.config.liveFlashUrl.length > 0) {
 					swfurl = this.config.liveFlashUrl;
@@ -75,18 +75,10 @@
 				}
 				var ua = navigator.userAgent;
 				if (ua.indexOf("Maxthon") > 0 && ua.indexOf("Chrome") > 0) { //遨游云浏览器，缓存了flash导致事件注册不上去
-					swfurl += (swfurl.indexOf("?") > 0 ? "&" : "?") + "_=" + tvp.$.now();
+					swfurl += (swfurl.indexOf("?") > 0 ? "&" : "?") + "_=" + xplayer.$.now();
 				}
 			}
 			swfurl = $.filterXSS(swfurl);
-			if (typeof window.console != "undefined" && $.isFunction(window.console.warn) && swfurl.indexOf("TencentPlayer.swf") > 0 && $.inArray(document.location.hostname, ["v.qq.com", "film.qq.com"]) == -1) {
-				var msg = "您当前使用的flash播放器是腾讯视频官网专用版，如无必要请使用外贴版本";
-				if ($.browser.chrome) {
-					window.console.warn("%c" + msg, "background: rgba(252,234,187,1)");
-				} else {
-					window.console.warn(msg);
-				}
-			}
 			return swfurl;
 		},
 		getFlashHTML: function() {
@@ -122,13 +114,13 @@
 				}
 				
 				str += propStr;
-				str += '	<div id="tvp_flash_install" style="line-height:' + height + ';background:#000000;text-align:center"><a href="http://www.adobe.com/go/getflashplayer" target="_blank" style="color:#ffffff;font-size:14px;padding:10px;">点击此处安装播放视频需要的flash插件</a></div>\n';
+				str += '	<div id="xplayer_flash_install" style="line-height:' + height + ';background:#000000;text-align:center"><a href="http://www.adobe.com/go/getflashplayer" target="_blank" style="color:#ffffff;font-size:14px;padding:10px;">点击此处安装播放视频需要的flash插件</a></div>\n';
 				str += '</object>';
 			}
 			// else if ( !! $.os.android) {
 			// 	str += '<object type="application/x-shockwave-flash" data="' + swfurl + '" width="' + this.config.width + '" height="' + this.config.height + '" id="' + this.playerid + '" align="middle">\n';
 			// 	str += propStr;
-			// 	str += '	<div class="tvp_player_noswf">未检测到flash插件或者您的设备暂时不支持flash播放</div>';
+			// 	str += '	<div class="xplayer_player_noswf">未检测到flash插件或者您的设备暂时不支持flash播放</div>';
 			// 	str += '</object>'
 			// } 
 			else {
@@ -146,40 +138,19 @@
 				this.$mod = $("#" + modId.id);
 				this.modId = this.$mod.attr("id") || "";
 			} else {
-				el = tvp.$.getByID(modId);
+				el = xplayer.$.getByID(modId);
 				this.modId = modId, this.$mod = $(el);
 			}
 			if (!el) return;
 			var str = this.getFlashHTML(),
-				startTime = $.now(),
 				swfUrl = this.getFlashSwfUrl(),
-				cmd = 3544,
 				$me = this,
 				videoModId = "mod_" + this.playerid;
-			this.on(tvp.ACTION.onFlashPlayerInited,function(){
-				tvp.report({
-					cmd : cmd,
-					speed : $.now() - startTime,
-					appId : $me.config.appid,
-					contentId : $me.config.contentId,
-					vid: $me.curVideo.getFullVid() || $me.curVideo.getChannelId(),
-					str3: $me.getPlayerType(),
-					str4 : swfUrl
-				});
-			});
-			tvp.report({
-				cmd : cmd,
-				appId : $me.config.appid,
-				contentId : $me.config.contentId,
-				vid: $me.curVideo.getFullVid() || $me.curVideo.getChannelId(),
-				str3: $me.getPlayerType(),
-				str4 : swfUrl
-			});
 			el.innerHTML = '<div id="' + videoModId + '">' + str + '</div>';
 			this.flashobj = $.browser.ie ? document.getElementById(this.playerid) : document.embeds[this.playerid];
 			this.videomod = $.getByID(videoModId);
 
-			var h = this.config.height+"",fl = $.getByID("tvp_flash_install");
+			var h = this.config.height+"",fl = $.getByID("xplayer_flash_install");
 			if(h.indexOf("%")>0 && fl){
 				fl.style.lineHeight = el.offsetHeight;
 			}
@@ -194,4 +165,4 @@
 	})
 
 
-})(tvp, tvp.$);
+})(xplayer, xplayer.$);
