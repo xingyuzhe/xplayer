@@ -3,23 +3,23 @@
  */
 
 /*
- * @include "./tvp.define.js"
- * @include "./tvp.jquery.js"
- * @include "./tvp.common.js"
+ * @include "./xplayer.define.js"
+ * @include "./xplayer.jquery.js"
+ * @include "./xplayer.common.js"
  */
 
 ;
-(function(tvp, $) {
+(function(xplayer, $) {
 	/**
 	 * 播放器基类
 	 *
-	 * @class tvp.BasePlayer
+	 * @class xplayer.BasePlayer
 	 * @param {number}
 	 *          vWidth 宽度
 	 * @param {number}
 	 *          vHeight 高度
 	 */
-	tvp.BasePlayer = function() {
+	xplayer.BasePlayer = function() {
 		var fnMap = {};//回调存储对象
 		this.modId = "",
 		this.sessionId = $.createGUID(), //当前回话id，每次创建播放器都有自己的sessionid，主要用于一些统计上报，区分每次输出播放器的多次上报
@@ -27,7 +27,7 @@
 		this.videomod = null, //仅播放器的容器
 		this.playerid = "", // 当前实例
 		this.curVideo = null, // 视频对象
-		//this.curVid = "", //当前播放的视频vid
+		this.curVid = "", //当前播放的视频vid
 		this.instance = null, //当前创建的实例
 		this.dataset = {}, //数据集,用于当前播放器内部的一些全局变量存储，
 		/**
@@ -56,7 +56,7 @@
 		 */
 		this.config = {};
 		/**
-		 * 劫持tvp.Player对象的公共方法列表，外壳播放器调用这些方法实际上调用的实际new出来的播放器实例
+		 * 劫持xplayer.Player对象的公共方法列表，外壳播放器调用这些方法实际上调用的实际new出来的播放器实例
 		 */
 		this.hijackFun = [
 			"getPlayer",
@@ -77,7 +77,7 @@
 			var arr = ["init", "addParam", "write", "setPlayerReady"];
 			arr = arr.concat(me.hijackFun);
 			for (var i = 0, len = arr.length; i < len; i++) {
-				me.prototype[arr[i]] = tvp.$.noop; // 设置为空函数
+				me.prototype[arr[i]] = xplayer.$.noop; // 设置为空函数
 			}
 		})(this);
 		/**
@@ -138,15 +138,15 @@
 		}
 	}
 
-	tvp.BasePlayer.prototype = {
+	xplayer.BasePlayer.prototype = {
 		/**
 		 * 设置当前播放视频对象
 		 */
 		setCurVideo: function(videoinfo) {
 			// if (this.curVideo === null) {
-			// 	this.curVideo = new tvp.VideoInfo();
+			// 	this.curVideo = new xplayer.VideoInfo();
 			// }
-			// if (videoinfo instanceof tvp.VideoInfo) {
+			// if (videoinfo instanceof xplayer.VideoInfo) {
 			// 	videoinfo.clone(this.curVideo);
 			// }
 			this.curVideo = videoinfo;
@@ -169,7 +169,7 @@
 		 * @public
 		 */
 		getCurVid: function() {
-			return (this.curVideo instanceof tvp.VideoInfo) ? this.curVideo.getVid() : "";
+			return (this.curVideo instanceof xplayer.VideoInfo) ? this.curVideo.getVid() : "";
 		},
 		/**
 		 * 获取当前播放的视频列表
@@ -177,7 +177,7 @@
 		 * @public
 		 */
 		getCurVidList: function() {
-			return (this.curVideo instanceof tvp.VideoInfo) ? this.curVideo.getVidList() : "";
+			return (this.curVideo instanceof xplayer.VideoInfo) ? this.curVideo.getVidList() : "";
 		},
 
 		/**
@@ -193,7 +193,7 @@
 
 			for (var i = 0, len = this.eventList.length; i < len; i++) {
 				var evtName = "on" + this.eventList[i];
-				this[evtName] = $.isFunction(this.config[evtName]) ? this.config[evtName] : tvp.$.noop;
+				this[evtName] = $.isFunction(this.config[evtName]) ? this.config[evtName] : xplayer.$.noop;
 			}
 
 			this.setCurVideo(this.config.video);
@@ -207,16 +207,6 @@
 			$("#" + id).html("here is player of base");
 		},
 		/**
-		 * 日志接口
-		 * @param  {string} msg 日志正文
-		 */
-		log: function(msg) {
-			if (window.console) {
-				window.console.log(msg);
-			}
-		},
-
-		/**
 		 * 获得事件回调函数
 		 * @param  {[type]} eventName [description]
 		 * @return {[type]}           [description]
@@ -225,12 +215,12 @@
 			var fn = undefined;
 			//看看外壳对象是否有定义自定义的事件回调
 			//这一般是创建完播放器以后player.onwrite=function(){}传入
-			if (this.instance && $.isFunction(this.instance[eventName]) && this.instance[eventName] != tvp.$.noop) {
+			if (this.instance && $.isFunction(this.instance[eventName]) && this.instance[eventName] != xplayer.$.noop) {
 				fn = this.instance[eventName];
 			}
 			//如果当前对象定义了自定义的对应事件回调，并且不是默认的空函数，则优先执行
 			//一般是由player.create({onwrite:function(){code here}})初始化时传入
-			else if ($.isFunction(this[eventName]) && this[eventName] != tvp.$.noop) {
+			else if ($.isFunction(this[eventName]) && this[eventName] != xplayer.$.noop) {
 				fn = this[eventName];
 			}
 			return fn;
@@ -269,10 +259,6 @@
 			p.style.position = "relative";
 			p.style.left = "0px";
 			p.style.top = "0px";
-			//for qq浏览器
-			if($.browser.MQQ){
-				p.style.height = parseInt(this.config.height)+'px';
-			}
 		},
 		/**
 		 * 隐藏播放器
@@ -283,31 +269,8 @@
 			if (!p) return;
 			p.style.position = "absolute"
 			p.style.left = "-200%";
-			//for qq浏览器
-			if($.browser.MQQ){
-				p.style.height = '1px';
-			}			
-		},
-		
-		/**
-		 * 执行flash播放器提供的方法
-		 * @param {String} 要执行的方法名
-		 * @return {Mix}
-		 */
-		execFlashMethod : function(fnName){
-			var playerobj = this.getPlayer(),
-				argArr = [],ret;
-			if (!playerobj || !playerobj[fnName]){
-				return;
-			}
-			argArr = [].slice.call(arguments,1);
-			try{
-				ret = playerobj[fnName].apply(playerobj,argArr);
-				return ret;
-			}catch(e){
-				
-			}
+			p.style.top = "-200%";		
 		}
 	}
 
-})(tvp, tvp.$);
+})(xplayer, xplayer.$);

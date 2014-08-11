@@ -1,4 +1,4 @@
-xplayer.report = (function() {
+xplayer.utils.report = (function() {
 	var isFree = true;
 	var reportObj = null;
 	var urlList = [], timer;
