@@ -311,7 +311,7 @@ xplayer.utils = {
 	}
 };
 
-xplayer.version = (function() {
+xplayer.utils.version = (function() {
 	/** private */
 	var vOcx = "0.0.0.0",
 		vflash = "0.0.0",

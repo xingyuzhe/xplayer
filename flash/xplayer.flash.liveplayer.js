@@ -1,0 +1,33 @@
+;
+(function(xplayer, $) {
+	/**
+	 * Flash直播播放器类
+	 * @class xplayer.FlashPlayer
+	 * @extends xplayer.BaseFlash
+	 */
+	xplayer.FlashLivePlayer = function() {
+		xplayer.BaseFlash.maxId++;
+	}
+
+	/*
+	 * 从xplayer.BaseFlash继承
+	 */
+	xplayer.FlashLivePlayer.prototype = new xplayer.BaseFlash();
+
+	$.extend(xplayer.FlashLivePlayer.prototype, {
+
+		getPlayerType: function() {
+			return "liveflash";
+		},
+		/**
+		 * 获得播放器的flashvars
+		 * @return {[type]} [description]
+		 */
+		getFlashVar: function() {
+			var flashvar = '';
+			return flashvar;
+		},
+		play: function(video) {},
+		pause: function() {}
+	});
+})(xplayer, xplayer.$);

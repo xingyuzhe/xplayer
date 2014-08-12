@@ -4,8 +4,8 @@
 ;
 (function($) {
 	/**
-	 * @leads tvp.$
-	 * @name tvp.$.cookie
+	 * @leads xplayer.$
+	 * @name xplayer.$.cookie
 	 * @type {Object}
 	 */
 	$.cookie = {

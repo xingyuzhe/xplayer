@@ -10,7 +10,7 @@ xplayer.filename = "${FILENAME}"; //呵呵，这个为啥是通配符？在grunt
 //seajs & requirejs 
 if (typeof define === 'function') {
 	define("xplayer", [], function() {
-		return tvp;
+		return xplayer;
 	});
 };
 

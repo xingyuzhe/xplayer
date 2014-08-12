@@ -87,10 +87,10 @@ xplayer.PLAYERNAMES = ["FlashPlayer", "FlashLivePlayer", "MP4Link", "Html5Player
 /**
  * 定义视频播放类型——直播或者点播
  *
- * @namespace tvp.PLAYTYPE
+ * @namespace xplayer.PLAYTYPE
  * @type {Object}
  */
-tvp.PLAYTYPE = {
+xplayer.PLAYTYPE = {
 	/**
 	 * 直播
 	 *

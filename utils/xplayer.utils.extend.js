@@ -10,13 +10,13 @@
 		/**
 		 * 空函数
 		 *
-		 * @lends tvp.$
+		 * @lends xplayer.$
 		 */
 		noop: function() {},
 		/**
 		 * 是否是字符串
 		 *
-		 * @lends tvp.$
+		 * @lends xplayer.$
 		 */
 		isString: function(val) {
 			return $.type(val) === "string";
@@ -35,7 +35,7 @@
 		/**
 		 * 是否未定义
 		 *
-		 * @lends tvp.$
+		 * @lends xplayer.$
 		 */
 		isUndefined: function(val) {
 			return $.type(val) === "undefined";
@@ -43,7 +43,7 @@
 		/**
 		 * 获取当前毫秒
 		 *
-		 * @lends tvp.$
+		 * @lends xplayer.$
 		 * @return {Number}
 		 */
 		now: function() {
@@ -353,7 +353,7 @@
 		 * @return {Boolean}   [description]
 		 */
 		isTrue: function(v) {
-			return eval(tvp.$.filterXSS(v)); // 0 ,1 ,true ,false,'true','false'..
+			return eval(xplayer.$.filterXSS(v)); // 0 ,1 ,true ,false,'true','false'..
 		},
 		/**
 		 * 根据插件name载入插件对应CSS文件
@@ -361,9 +361,9 @@
 		 */
 		loadPluginCss: function(name) {
 			var url = "",
-				urlArray = tvp.defaultConfig.pluginCssUrl;
+				urlArray = xplayer.defaultConfig.pluginCssUrl;
 			if (name in urlArray) {
-				url = tvp.defaultConfig.cssPath + urlArray[name];
+				url = xplayer.defaultConfig.cssPath + urlArray[name];
 			}
 			return $.loadCss(url);
 

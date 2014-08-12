@@ -1,16 +1,16 @@
 {
-  "name": "TenVideoPlayer_V2",
-  "version": "2.0.0",
-  "description": "Tencent Video Player",
+  "name": "xplayer",
+  "version": "1.0.0",
+  "description": "javan's web player",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Tencent",
+    "Jarvan",
     "Video",
     "Player",
-    "TenPlayer"
+    "XPlayer"
   ],
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -23,12 +23,12 @@
     "grunt-wrap": "~0.3.0"
   },
   "author": {
-    "team": "Tencent-Video Web Front End Team",
-    "members": "popotang komahu grubbyliu jarvanxing walkerwang derekma xingkaiwang ameliexu kbinliu"
+    "team": "jarvan",
+    "members": "jarvan"
   },
   "cfg": {
     "temp": "./.temp/",
-    "releasePath": "../../release/tencentvideo_v1/tvp/js/",
-    "debugPath": "../../release/tencentvideo_v1/tvp/_debug_/"
+    "releasePath": "../../release/js/",
+    "debugPath": "../../release/_debug_/"
   }
 }

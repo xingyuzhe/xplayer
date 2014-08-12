@@ -6,26 +6,26 @@
 
 
 ;
-(function(tvp, $) {
+(function(xplayer, $) {
 	var curVid = "";
-	tvp.MP4Skin = {
+	xplayer.MP4Skin = {
 		html: (function() {
 			return [
 				'<div style="background:#000000 url(http://i.gtimg.cn/qqlive/images/20121119/i1353305744_1.jpg) center center no-repeat;">',
-				'	<a style="width:100%;height:100%;display:block" class="tvp_mp4_link"></a>',
+				'	<a style="width:100%;height:100%;display:block" class="xplayer_mp4_link"></a>',
 				'</div>'].join("");
 		})()
 	}
 
-	tvp.MP4Link = function(vWidth, vHeight) {
-		this.config.width = tvp.$.filterXSS(vWidth);
-		this.config.height = tvp.$.filterXSS(vHeight);
+	xplayer.MP4Link = function(vWidth, vHeight) {
+		this.config.width = xplayer.$.filterXSS(vWidth);
+		this.config.height = xplayer.$.filterXSS(vHeight);
 		this.$elements = null;
 		this.$mp4linker = null;
 	};
 
-	tvp.MP4Link.fn = tvp.MP4Link.prototype = new tvp.BaseHtml5();
-	$.extend(tvp.MP4Link.fn, {
+	xplayer.MP4Link.fn = xplayer.MP4Link.prototype = new xplayer.BaseHtml5();
+	$.extend(xplayer.MP4Link.fn, {
 
 		/**
 		 * 输出播放器
@@ -39,19 +39,19 @@
 			if ($.type(id) == "object" && id.nodeType == 1) {
 				el = id;
 			} else {
-				el = tvp.$.getByID(id);
+				el = xplayer.$.getByID(id);
 			}
 			if (!el) return;
 
 			this.playerid = this.config.playerid;
 			if (!this.playerid) {
-				this.playerid = "tenvideo_video_player_" + (tvp.MP4Link.maxId++);
+				this.playerid = "tenvideo_video_player_" + (xplayer.MP4Link.maxId++);
 			}
 			this.modId = id;
 			this.$mod = $("#" + id);
 			this.oninited();
 
-			var htmlBuf = tvp.MP4Skin.html;
+			var htmlBuf = xplayer.MP4Skin.html;
 			videoModId = "mod_" + this.playerid;
 
 			var $videomod = $('<div id="' + videoModId + '"></div>').appendTo(t.$mod);
@@ -61,7 +61,7 @@
 				.css("height", t.config.height);
 
 			this.videomod = $.getByID(videoModId);
-			this.$mp4linker = this.$elements.find(".tvp_mp4_link");
+			this.$mp4linker = this.$elements.find(".xplayer_mp4_link");
 			this.callCBEvent("onwrite");
 			this.registerMonitor();
 
@@ -81,7 +81,7 @@
 		play: function(v) {
 			var t = this;
 
-			if (v instanceof tvp.VideoInfo) {
+			if (v instanceof xplayer.VideoInfo) {
 				isVidChange = (v.getVid() != curVid && curVid != "");
 				t.setCurVideo(v);
 				if (isVidChange) {
@@ -90,12 +90,12 @@
 				curVid = t.curVideo.getFullVid();
 			}
 
-			t.$mp4linker.trigger("tvp:mp4:ajaxstart", v instanceof tvp.VideoInfo ? v.getVid() : v);
+			t.$mp4linker.trigger("xplayer:mp4:ajaxstart", v instanceof xplayer.VideoInfo ? v.getVid() : v);
 
 			t.curVideo.getMP4Url().done(function(url) {
-				t.$mp4linker.trigger("tvp:mp4:ajaxsuc", url);
+				t.$mp4linker.trigger("xplayer:mp4:ajaxsuc", url);
 				t.$mp4linker.attr("href", url);
-				t.$mp4linker.trigger("tvp:mp4:src", url);
+				t.$mp4linker.trigger("xplayer:mp4:src", url);
 				t.callCBEvent("onplay", t.curVideo.lastQueryVid, t.curVideo);
 				if(window!=top){
 					t.$mp4linker.bind($.os.hasTouch?'touchend':'click',function(e){
@@ -106,8 +106,8 @@
 			}).fail(function(errCode, errContent) {
 				t.showError(errCode, errContent);
 
-				t.$mp4linker.trigger("tvp:mp4:ajaxerror");
-				t.$mp4linker.trigger("tvp:mp4:error", errcode, errcontent);
+				t.$mp4linker.trigger("xplayer:mp4:ajaxerror");
+				t.$mp4linker.trigger("xplayer:mp4:error", errcode, errcontent);
 
 				t.callCBEvent("onerror", errCode, errContent);
 			}).always(function() {
@@ -135,5 +135,5 @@
 		}
 	});
 
-	tvp.MP4Link.maxId = 0;
-})(tvp, tvp.$);
+	xplayer.MP4Link.maxId = 0;
+})(xplayer, xplayer.$);

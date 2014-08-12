@@ -1,22 +1,22 @@
-(function(tvp, $) {
-	$.extend(tvp.MP4Link.fn, {
+(function(xplayer, $) {
+	$.extend(xplayer.MP4Link.fn, {
 		buildmonitor: function() {
-			if($.isUndefined(tvp.H5Monitor)){
+			if($.isUndefined(xplayer.H5Monitor)){
 				return;
 			}
 			var t = this,
 				monitor = null;
 
-			this.$mp4linker.on("tvp:mp4:ajaxstart", function(e, vid) {
+			this.$mp4linker.on("xplayer:mp4:ajaxstart", function(e, vid) {
 				monitor = null;
-				monitor = new tvp.H5Monitor(vid, t);
+				monitor = new xplayer.H5Monitor(vid, t);
 				monitor.addStep(1011);
-			}).on("tvp:mp4:ajaxsuc", function() {
+			}).on("xplayer:mp4:ajaxsuc", function() {
 				monitor.reportStep(1011, {
 					val1: 1,
 					val2: 0
 				});
-			}).on("tvp:mp4:src", function() {
+			}).on("xplayer:mp4:src", function() {
 				monitor.report(4, 1);
 			}).on("click",function(){
 				if(monitor && $.isFunction(monitor.report)){
@@ -25,4 +25,4 @@
 			});
 		}
 	});
-})(tvp, tvp.$);
+})(xplayer, xplayer.$);

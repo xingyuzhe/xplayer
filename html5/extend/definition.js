@@ -5,11 +5,11 @@
 
 
 ;
-(function(tvp, $) {
-	$.extend(tvp.Html5Tiny.fn, {
+(function(xplayer, $) {
+	$.extend(xplayer.Html5Tiny.fn, {
 		/**
 		 * 切换清晰度
-		 * @memberOf tvp.Html5Tiny
+		 * @memberOf xplayer.Html5Tiny
 		 * @param  {[type]} format [description]
 		 * @return {[type]}        [description]
 		 */
@@ -42,4 +42,4 @@
 			this.play(this.curVideo);
 		}
 	});
-})(tvp, tvp.$);
+})(xplayer, xplayer.$);
