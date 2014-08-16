@@ -30,5 +30,5 @@
 		}
 	})({}, '$' + (+new Date));
 
-	$.tmpl = tmpl;
+	xplayer.utils.tmpl = tmpl;
 })(xplayer.$);

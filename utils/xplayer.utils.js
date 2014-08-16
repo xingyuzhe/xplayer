@@ -49,13 +49,6 @@ xplayer.utils = {
 		return false;
 	},
 	/**
-	 * 是否使用HLS
-	 * @return {Boolean} [description]
-	 */
-	isUseHLS: function() {
-		if (xplayer.$.os.ios) return true;
-	},
-	/**
 	 * 直播是否用HTML5
 	 *
 	 * @return {}
@@ -211,50 +204,6 @@ xplayer.utils = {
 			key = skey;
 		}
 		return key;
-	},
-	/**
-	 * 打开登录框
-	 */
-	openLogin: function() {
-
-	},
-	/**
-	 * 获取指定视频vid的截图
-	 *
-	 * @param {string}
-	 *          lpszVID 视频vid
-	 * @param {number}
-	 *          idx 视频看点 默认是0
-	 * @return {string} 视频截图
-	 */
-	getVideoSnap: function(lpszVID, idx) {
-		var szPic;
-		var uin;
-		var hash_bucket = 10000 * 10000;
-		var object = lpszVID;
-
-		if (lpszVID.indexOf("_") > 0) {
-			var arr = lpszVID.split("_");
-			lpszVID = arr[0];
-			idx = parseInt(arr[1]);
-		}
-
-		var uint_max = 0x00ffffffff + 1;
-		var hash_bucket = 10000 * 10000;
-		var tot = 0;
-		for (var inx = 0; inx < lpszVID.length; inx++) {
-			var nchar = lpszVID.charCodeAt(inx);
-			tot = (tot * 32) + tot + nchar;
-			if (tot >= uint_max) tot = tot % uint_max;
-		}
-		uin = tot % hash_bucket;
-		if (idx == undefined) idx = 0;
-		if (idx == 0) {
-			szPic = ["http://vpic.video.qq.com/", uin, "/", lpszVID, "_160_90_3.jpg"].join("");
-		} else {
-			szPic = ["http://vpic.video.qq.com/", uin, "/", lpszVID, "_", "160_90_", idx, "_1.jpg"].join("");
-		}
-		return szPic;
 	},
 	/**
 	 * 得到手机设备上用的截图

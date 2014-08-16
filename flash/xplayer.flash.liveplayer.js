@@ -5,14 +5,14 @@
 	 * @class xplayer.FlashPlayer
 	 * @extends xplayer.BaseFlash
 	 */
-	xplayer.FlashLivePlayer = function() {
+	xplayer.flash.LivePlayer = function() {
 		xplayer.BaseFlash.maxId++;
 	}
 
 	/*
 	 * 从xplayer.BaseFlash继承
 	 */
-	xplayer.FlashLivePlayer.prototype = new xplayer.BaseFlash();
+	xplayer.flash.LivePlayer.prototype = new xplayer.flash.BasePlayer();
 
 	$.extend(xplayer.FlashLivePlayer.prototype, {
 

@@ -7,7 +7,7 @@
 	 * @class xplayer.BaseFlash
 	 * @extends xplayer.BasePlayer
 	 */
-	xplayer.BaseFlash = function() {
+	xplayer.flash.BasePlayer = function() {
 		var $me = this;
 
 		this.swfPathRoot = "";
@@ -24,9 +24,9 @@
 	if (typeof xplayer.BaseFlash.maxId != "number") {
 		xplayer.BaseFlash.maxId = 0;
 	}
-	xplayer.BaseFlash.prototype = new xplayer.BasePlayer();
+	xplayer.flash.BasePlayer.prototype = new xplayer.BasePlayer();
 
-	$.extend(xplayer.BaseFlash.prototype, {
+	$.extend(xplayer.flash.BasePlayer.prototype, {
 		getFlashVar: function() {
 			return "";
 		},

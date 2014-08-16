@@ -492,7 +492,41 @@
 		 */
 		isPlayingLoadingAd : function(){
 			return this.$video.data("data-playing-loadingad") == 1;
-		}
+		},
+		/**
+		 * 切换清晰度
+		 * @memberOf xplayer.Html5Tiny
+		 * @param  {[type]} format [description]
+		 * @return {[type]}        [description]
+		 */
+		swtichDefinition: function(format) {
+			if (this.curVideo.getFormat() == format) return;
+
+			this.pause();
+			var curTime = this.getCurTime(),
+				t = this,
+				timer = null;
+			this.curVideo.setFormat(format);
+
+			this.$video.one("canplay canplaythrough", function(e) {
+				if (!t.isDefinitionSwitching) {
+					return;
+				}
+				setTimeout(function() {
+					t.seek(curTime)
+				}, 500);
+				timer = setInterval(function() {
+					if (t.videoTag.currentTime >= curTime) {
+						clearInterval(timer);
+						timer = null;
+						t.isDefinitionSwitching = false;
+					}
+				}, 50);
+			});
+
+			this.isDefinitionSwitching = true;
+			this.play(this.curVideo);
+		}		
 	});
 
 

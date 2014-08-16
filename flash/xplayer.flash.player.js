@@ -5,16 +5,16 @@
 	 * @class xplayer.FlashPlayer
 	 * @extends xplayer.BaseFlash
 	 */
-	xplayer.FlashPlayer = function(vWidth, vHeight) {
+	xplayer.flash.Player = function(vWidth, vHeight) {
 		xplayer.BaseFlash.maxId++;
 	}
 
 	/*
 	 * 从xplayer.BasePlayer继承，这句话很关键，谁注释掉谁SB
 	 */
-	xplayer.FlashPlayer.fn = xplayer.FlashPlayer.prototype = new xplayer.BaseFlash();
+	xplayer.flash.Player.fn = xplayer.flash.Player.prototype = new xplayer.flash.BasePlayer();
 
-	$.extend(xplayer.FlashPlayer.fn, {
+	$.extend( xplayer.flash.Player.fn, {
 		getPlayerType: function() {
 			return "flash";
 		},
