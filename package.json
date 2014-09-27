@@ -28,7 +28,7 @@
   },
   "cfg": {
     "temp": "./.temp/",
-    "releasePath": "../../release/js/",
-    "debugPath": "../../release/_debug_/"
+    "releasePath": "./release/js/",
+    "debugPath": "./release/_debug_/"
   }
 }
